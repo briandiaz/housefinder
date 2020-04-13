@@ -10,6 +10,7 @@ import { ListingRO } from './interfaces/listing.interface';
 import { AddAmenityDTO } from '../amenity/dtos/add-amenity.dto';
 import { AmenityDTO } from '../amenity/dtos/amenity.dto';
 import { AmenityService } from '../amenity/amenity.service';
+import { RemoveAmenityDTO } from '../amenity/dtos/remove-amenity.dto';
 
 @Injectable()
 export class ListingService {
@@ -46,10 +47,10 @@ export class ListingService {
     return await this.listingRepository.addAmenities(listing, amenities);
   }
 
-  async removeAmenities(listingId: string, addAmenitiesDTO: AddAmenityDTO[]): Promise<Array<AmenityDTO>> {
+  async removeAmenities(listingId: string, removeAmenitiesDTO: RemoveAmenityDTO[]): Promise<Array<AmenityDTO>> {
     const listing = await this.getById(listingId, { relations: ["amenities"] });
 
-    const amenities = await this.amenityService.findManyByIds(addAmenitiesDTO);
+    const amenities = await this.amenityService.findManyByIds(removeAmenitiesDTO);
 
     return await this.listingRepository.removeAmenities(listing, amenities);
   }

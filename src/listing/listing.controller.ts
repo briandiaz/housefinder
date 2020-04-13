@@ -13,6 +13,7 @@ import { imageFileFilter } from './utils/file';
 import { ListingRO } from './interfaces/listing.interface';
 import { AddAmenityDTO } from '../amenity/dtos/add-amenity.dto';
 import { AmenityDTO } from '../amenity/dtos/amenity.dto';
+import { RemoveAmenityDTO } from '../amenity/dtos/remove-amenity.dto';
 
 @ApiTags('listings')
 @Controller('listings')
@@ -98,8 +99,8 @@ export class ListingController {
   @UsePipes(ValidationPipe)
   async removeAmenitiesFromListing(
     @Param('id') listingId: string,
-    @Body() addAmenitiesDTO: AddAmenityDTO[],
+    @Body() removeAmenitiesDTO: RemoveAmenityDTO[],
   ): Promise<Array<AmenityDTO>> {
-    return await this.listingService.removeAmenities(listingId, addAmenitiesDTO);
+    return await this.listingService.removeAmenities(listingId, removeAmenitiesDTO);
   }
 }
