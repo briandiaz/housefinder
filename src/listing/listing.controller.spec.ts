@@ -5,12 +5,14 @@ import { ListingService } from './listing.service';
 import { ListingRepository } from './listing.repository';
 import { PhotoRepository } from '../photo/photo.repository';
 import { PhotoService } from '../photo/photo.service';
+import { AmenityService } from '../amenity/amenity.service';
+import { AmenityRepository } from '../amenity/amenity.repository';
 
 describe('Listing Controller', () => {
   let controller: ListingController;
   let service: ListingService;
-  let photoRepository: PhotoRepository;
   let photoService: PhotoService;
+  let amenityService: AmenityService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,7 +21,9 @@ describe('Listing Controller', () => {
         ListingService,
         ListingRepository,
         PhotoRepository,
-        PhotoService
+        PhotoService,
+        AmenityRepository,
+        AmenityService,
       ],
       imports: [
         PassportModule.register({
@@ -30,14 +34,14 @@ describe('Listing Controller', () => {
 
     controller = module.get<ListingController>(ListingController);
     service = module.get<ListingService>(ListingService);
-    photoRepository = module.get<PhotoRepository>(PhotoRepository);
     photoService = module.get<PhotoService>(PhotoService);
+    amenityService = module.get<AmenityService>(AmenityService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
     expect(service).toBeDefined();
-    expect(photoRepository).toBeDefined();
     expect(photoService).toBeDefined();
+    expect(amenityService).toBeDefined();
   });
 });
