@@ -9,7 +9,7 @@ export class PhotoDTO implements Readonly<PhotoDTO> {
   @IsNotEmpty()
   url: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, enum: PhotoStatusEnum })
   @IsString()
   @IsNotEmpty()
   status: PhotoStatusEnum;

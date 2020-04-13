@@ -1,4 +1,4 @@
-import { BaseEntity, Column, PrimaryGeneratedColumn, ManyToOne, Entity, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn, Unique } from "typeorm";
+import { BaseEntity, Column, PrimaryGeneratedColumn, ManyToOne, Entity, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn, Unique, ManyToMany, JoinTable } from "typeorm";
 import { IPoint } from "./interfaces/IPoint";
 import { ListingTypeEnum } from "./enums/listing-type.enum";
 import { UserEntity } from "../authentication/user.entity";
@@ -7,6 +7,7 @@ import { PhotoEntity } from "../photo/photo.entity";
 import { ListingDTO } from "./dtos/listing.dto";
 import { ListingRO } from "./interfaces/listing.interface";
 import { CONSTRAINTS } from "../config/constants";
+import { AmenityEntity } from "../amenity/amenity.entity";
 
 @Entity('listing')
 @Unique(
@@ -40,7 +41,7 @@ export class ListingEntity extends BaseEntity {
     nullable: false,
     transformer: {
       from: point => point,
-      to: point => `${point.latitude}, ${point.longitude}`,
+      to: point => `${point.x || point.latitude}, ${point.y || point.longitude}`,
     },
   })
   coordinates: IPoint;
@@ -60,7 +61,7 @@ export class ListingEntity extends BaseEntity {
   @Column({ type: 'integer', nullable: true })
   rating: number;
 
-  @Column({ type: 'varchar', name: 'listing_type', nullable: false })
+  @Column({ type: 'varchar', name: 'listing_type', nullable: false, enum: ListingTypeEnum })
   listingType: ListingTypeEnum;
 
   @Column({ type: 'boolean', nullable: true, name: 'is_pet_friendly' })
@@ -69,7 +70,7 @@ export class ListingEntity extends BaseEntity {
   @Column({ type: 'decimal' })
   price: number;
 
-  @Column({ type: 'varchar', nullable: false, name: 'uni_type' })
+  @Column({ type: 'varchar', nullable: false, name: 'uni_type', enum: ListingUnitTypeEnum })
   unitType: ListingUnitTypeEnum;
 
   @Column({ type: 'varchar', nullable: false, name: 'host_id' })
@@ -81,6 +82,10 @@ export class ListingEntity extends BaseEntity {
 
   @OneToMany(() => PhotoEntity, photo => photo.listing, { eager: true })
   photos: Array<PhotoEntity>;
+
+  @ManyToMany(() => AmenityEntity)
+  @JoinTable()
+  amenities: AmenityEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
@@ -108,6 +113,7 @@ export class ListingEntity extends BaseEntity {
     listing.unitType = listingDTO.unitType;
     listing.host = user;
     listing.photos = [];
+    listing.amenities = [];
 
     return listing;
   }

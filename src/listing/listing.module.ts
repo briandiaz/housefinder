@@ -7,6 +7,8 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 import { PhotoModule } from '../photo/photo.module';
 import { PhotoRepository } from '../photo/photo.repository';
 import { UserRepository } from '../authentication/user.repository';
+import { AmenityModule } from '../amenity/amenity.module';
+import { AmenityRepository } from '../amenity/amenity.repository';
 
 @Module({
   imports: [
@@ -14,9 +16,11 @@ import { UserRepository } from '../authentication/user.repository';
       ListingRepository,
       PhotoRepository,
       UserRepository,
+      AmenityRepository,
     ]),
     AuthenticationModule,
     PhotoModule,
+    AmenityModule,
   ],
   controllers: [ListingController],
   providers: [ListingService]
