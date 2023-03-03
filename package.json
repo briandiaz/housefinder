@@ -25,7 +25,7 @@
     "migration:run": "npm run typeorm -- migration:run"
   },
   "dependencies": {
-    "@nestjs/cli": "^7.0.0",
+    "@nestjs/cli": "^7.6.0",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/jwt": "^7.0.0",
